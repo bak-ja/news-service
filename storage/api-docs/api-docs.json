@@ -1,0 +1,379 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "NEWS SERVICE",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080/api"
+        }
+    ],
+    "paths": {
+        "/news": {
+            "get": {
+                "tags": [
+                    "News API"
+                ],
+                "summary": "Получить все новости",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Тест"
+                                                },
+                                                "tуче": {
+                                                    "type": "string",
+                                                    "example": "Текст текст текст ..."
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8080/storage/news_images/1hwGtnuKAmwFysMD3gRb6JtiIOG2l0RMezbc73m1.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "News API"
+                ],
+                "summary": "Создать новость",
+                "operationId": "store",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "text",
+                                    "image"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "text": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "properties": {
+                                            "": {
+                                                "type": "string",
+                                                "format": "binary"
+                                            }
+                                        },
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Not found."
+                    }
+                }
+            }
+        },
+        "/news/{id}": {
+            "get": {
+                "tags": [
+                    "News API"
+                ],
+                "summary": "Получить новость",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "news id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Тест"
+                                                },
+                                                "text": {
+                                                    "type": "string",
+                                                    "example": "Текст текст текст ..."
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8080/storage/news_images/1hwGtnuKAmwFysMD3gRb6JtiIOG2l0RMezbc73m1.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "News API"
+                ],
+                "summary": "Удалить новость",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "news id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not found."
+                    }
+                }
+            }
+        },
+        "/news/{id}/update": {
+            "post": {
+                "tags": [
+                    "News API"
+                ],
+                "summary": "Обновить новость",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "news id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "text",
+                                    "image"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "text": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "properties": {
+                                            "": {
+                                                "type": "string",
+                                                "format": "binary"
+                                            }
+                                        },
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Unprocessible entity"
+                    },
+                    "404": {
+                        "description": "Not found."
+                    }
+                }
+            }
+        },
+        "/news/{id}/publish": {
+            "post": {
+                "tags": [
+                    "News API"
+                ],
+                "summary": "Опубликовать новость",
+                "operationId": "publish",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "news id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Тест"
+                                                },
+                                                "text": {
+                                                    "type": "string",
+                                                    "example": "Текст текст текст ..."
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8080/storage/news_images/1hwGtnuKAmwFysMD3gRb6JtiIOG2l0RMezbc73m1.png"
+                                                },
+                                                "published_at": {
+                                                    "type": "string",
+                                                    "example": "2021-11-08 04:11:05"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation errors."
+                    },
+                    "404": {
+                        "description": "Not found."
+                    }
+                }
+            }
+        },
+        "/news/{id}/unpublish": {
+            "post": {
+                "tags": [
+                    "News API"
+                ],
+                "summary": "Отключить публикацию",
+                "operationId": "unpublish",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "news id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Тест"
+                                                },
+                                                "text": {
+                                                    "type": "string",
+                                                    "example": "Текст текст текст ..."
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8080/storage/news_images/1hwGtnuKAmwFysMD3gRb6JtiIOG2l0RMezbc73m1.png"
+                                                },
+                                                "published_at": {
+                                                    "type": "string",
+                                                    "example": "null"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found."
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

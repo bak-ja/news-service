@@ -1,0 +1,16 @@
+FROM php:8.0-cli
+
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install apt-utils -y \
+    && apt-get install git zip vim libzip-dev libgmp-dev libffi-dev libpng-dev libssl-dev -y \
+    && docker-php-ext-install gd pdo_mysql -j$(nproc) sockets zip gmp pcntl bcmath ffi \
+    && docker-php-source delete \
+    && apt-get autoremove --purge -y && apt-get autoclean -y && apt-get clean -y
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN chown -R www-data:www-data /var/www
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+WORKDIR /var/www
